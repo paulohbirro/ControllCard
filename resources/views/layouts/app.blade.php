@@ -10,6 +10,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -71,18 +73,22 @@
             </div>
         </nav>
 
+
+
         @yield('content')
     </div>
 
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-
     <script>
-
-        $(document).ready(function(){
-            alert('asdsa');
+        $( document ).ready(function() {
+            console.log('iniciando..');
         });
 
     </script>
+
+
+
 </body>
 </html>

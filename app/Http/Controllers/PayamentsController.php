@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\storeRequest;
 use App\Payaments;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,7 @@ class PayamentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(storeRequest $request)
     {
         Payaments::create($request->all());
         return redirect()->back()->with(['message' => 'Cadastrado com sucesso!']);
