@@ -1,3 +1,6 @@
+
+
+
 @extends('layouts.app')
 
 @section('content')
@@ -43,7 +46,7 @@
                     <div class="form-group">
 
 
-                        <input type="radio"  {{old('tipo')==\App\Payaments::DEBITO?'checked':''}}  name="tipo" value="{{\App\Payaments::DEBITO}}"  /> Debito
+                        <input type="radio"  checked {{old('tipo')==\App\Payaments::DEBITO?'checked':''}}  name="tipo" value="{{\App\Payaments::DEBITO}}"  /> Debito
                         <input type="radio"  {{old('tipo')==\App\Payaments::CREDITO?'checked':''}} name="tipo" value="{{\App\Payaments::CREDITO}}"  />Credito
 
 
@@ -65,7 +68,7 @@
                         <input type="text" value="{{old('valor')}}" name="valor" class="form-control" id="exampleInputPassword1" />
                     </div>
 
-                    <button type="submit" class="btn btn-default">
+                    <button type="submit" class="btn btn-success">
                         Enviar
                     </button>
 
@@ -76,28 +79,45 @@
                 <div class="row">
                     <div class="col-md-12">
 
-                <table>
+                <table class="table table-info">
 
                     <thead>
-                    <form method="get">
+                    <form method="get" action="/home">
+
                     <tr>
-                        <th>
+                        <th width="230">
                             Pesquisar por data:
                         </th>
                         <th>
 
-                            <input type="text" value="" class="date" id="data1" name="data1"> até <input type="text" value="" name="data2">
+                            <input type="text" value=" {{request()->get('data1')}}" class="data1" id="data1" name="data1"> até <input type="text" value="{{request()->get('data1')}}" id="data2" name="data2">
                         </th>
 
-                        <th>  <button type="submit" class="btn btn-default">
-                                Enviar
-                            </button></th>
+
+                        <th width="49%">
+                            Crédito <input type="checkbox" value="credito"> | Debito <input type="checkbox" value="credito">
+                            <button style="margin-left: 30px;" type="submit" class="btn btn-info">
+                                Buscar
+                        </th>
+
+                        <th>
+                          <h1>  <span class="label label-primary">R$ {{ money_format('%n', $total ) }}</span></h1>
+
+
+
+                        </th>
+
+
 
                     </tr>
                     </form>
                     </thead>
                 </table>
-                <table class="table">
+                        <br>
+
+
+                        <div class="table-responsive">
+                <table class="table table-hover " >
                     <thead>
 
 
@@ -115,7 +135,7 @@
                             Valor
                         </th>
                         <th>
-                            Gerenciar
+                            Gerencdata2iar
                         </th>
                     </tr>
 
@@ -132,16 +152,16 @@
                             {{$payament->nome}}
                         </td>
                         <td>
-                            {{ date( 'd/m/Y' , strtotime($payament->created_at))}}
+                            {{ date( 'd/m/Y H:i:' , strtotime($payament->created_at))}}
                         </td>
                         <td>
-                            {{ money_format('%n', $payament->valor ) }}
+                           R$ {{ money_format('%n', $payament->valor ) }}
                         </td>
                         <td>
 
 
-                            <button class="btn btn-default" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete">
-                                Delete record #54
+                            <button class="btn btn-danger" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete">
+                               Excluir
                             </button>
                         </td>
                     </tr>
@@ -156,7 +176,7 @@
 
                     <div>
                         <div>
-
+                            <div>
 
                 <div class="right-align">
                     {{ $payaments->appends(request()->query())->render() }}
@@ -166,4 +186,6 @@
     </div>
 
 
+
 @endsection
+

@@ -8,12 +8,26 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Controle de cartões') }}</title>
 
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+    <script type="text/javascript">
+        $(function () {
+            $("#data1").mask("99/99/9999");
+            $("#data2").mask("99/99/9999");
+        });
+    </script>
+
 </head>
 <body>
     <div id="app">
@@ -31,7 +45,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                       Consiliador de cartões
                     </a>
                 </div>
 
@@ -64,6 +78,18 @@
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
+
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
+                                                     document.getElementById('taxas').submit();">
+                                            Configurar taxas
+                                        </a>
+
+                                        <form id="taxas" action="{{ route('taxas') }}" method="GET" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
                                     </li>
                                 </ul>
                             </li>
@@ -79,16 +105,9 @@
     </div>
 
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script>
-        $( document ).ready(function() {
-            console.log('iniciando..');
-        });
-
-    </script>
 
 
 
 </body>
 </html>
+

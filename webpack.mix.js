@@ -11,5 +11,9 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('node_modules/jquery/dist/jquery.js','node_modules/jquery.maskedinput/src/jquery.maskedinput.js','resources/assets/js/app.js', 'public/js')
+mix.js([
+    'node_modules/laravel-materialize/dist/materialize/materialize.js',
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/jquery.maskedinput/src/jquery.maskedinput.js',
+    'resources/assets/js/app.js'], 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
