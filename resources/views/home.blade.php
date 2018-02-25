@@ -5,20 +5,34 @@
 
 @section('content')
 
+    <script>
 
+        function mostrar(){
+
+            if(document.getElementById('credito').checked){
+
+                document.getElementById("parcelas").style.display = "block";
+            }
+            else{
+                document.getElementById("parcelas").style.display = "none";
+            }
+
+        }
+
+    </script>
 
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    ...
+                    ATENÇÃO!
                 </div>
                 <div class="modal-body">
-                    ...
+                    Deseja realmente excluir ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-danger btn-ok">Delete</a>
+                    <a onclick="document.getElementById('delete-form').submit();" class="btn btn-danger btn-ok">sim</a>
                 </div>
             </div>
         </div>
@@ -46,10 +60,25 @@
                     <div class="form-group">
 
 
-                        <input type="radio"  checked {{old('tipo')==\App\Payaments::DEBITO?'checked':''}}  name="tipo" value="{{\App\Payaments::DEBITO}}"  /> Debito
-                        <input type="radio"  {{old('tipo')==\App\Payaments::CREDITO?'checked':''}} name="tipo" value="{{\App\Payaments::CREDITO}}"  />Credito
+                        <input  type="radio"  onclick="mostrar();"  checked {{old('tipo')==\App\Payaments::DEBITO?'checked':''}}  name="tipo" value="{{\App\Payaments::DEBITO}}"  /> Debito
+                        <input id="credito" onclick="mostrar();" type="radio"  {{old('tipo')==\App\Payaments::CREDITO?'checked':''}} name="tipo" value="{{\App\Payaments::CREDITO}}"  />Credito
 
 
+                    </div>
+
+
+                    <div id="parcelas" style="display:none" class="form-group">
+
+                        <label for="exampleInputPassword1">
+                            Parcelas
+                        </label>
+                        <select name="parcelas">
+
+                            <option value="">selecione parcelas</option>
+                            @for ($i = 1; $i < 13; $i++)
+                             <option value="1">{{$i}}</option>
+                            @endfor
+                        </select>
                     </div>
 
 
@@ -163,6 +192,19 @@
                             <button class="btn btn-danger" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete">
                                Excluir
                             </button>
+
+                            <form id="delete-form" method="post" action="{{route('home.destroy',[$payament->id])}}"
+                             style="display: none" >
+
+                                <input type="hidden" name="_method" value="delete">
+
+                                {{csrf_field()}}
+
+                            </form>
+
+
+
+
                         </td>
                     </tr>
                     @empty
