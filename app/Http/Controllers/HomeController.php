@@ -42,7 +42,8 @@ class HomeController extends Controller
 
 
 
-        $payaments = $payaments->orderBy('nome')->paginate();
+
+        $payaments = $payaments->orderBy('created_at')->paginate();
 
 
 
@@ -52,7 +53,33 @@ class HomeController extends Controller
 
     public function store(storeRequest $request)
     {
-        Payaments::create($request->all());
+
+
+
+       if($request->has('parcelas'))
+       {
+
+           for($i=1;$i<$request->get('parcelas');$i++) {
+               $pagamentos = Payaments::create($request->all());
+
+               $dt = $pagamentos->created_at;
+
+
+               $update= Payaments::find($pagamentos->id);
+               $update->created_at = $dt->addMonth($i);
+               $update->save();
+
+
+           }
+
+       }
+
+
+           Payaments::create($request->all());
+
+
+
+
         return redirect()->back()->with(['message' => 'Cadastrado com sucesso!']);
     }
 

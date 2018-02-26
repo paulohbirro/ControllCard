@@ -76,7 +76,7 @@
 
                             <option value="">selecione parcelas</option>
                             @for ($i = 1; $i < 13; $i++)
-                             <option value="1">{{$i}}</option>
+                             <option value="{{$i}}">{{$i}}</option>
                             @endfor
                         </select>
                     </div>
@@ -114,7 +114,7 @@
                     <form method="get" action="/home">
 
                     <tr>
-                        <th width="230">
+                        <th width="180">
                             Pesquisar por data:
                         </th>
                         <th>
@@ -123,8 +123,8 @@
                         </th>
 
 
-                        <th width="49%">
-                            Crédito <input type="checkbox" value="credito"> | Debito <input type="checkbox" value="credito">
+                        <th width="45%">
+
                             <button style="margin-left: 30px;" type="submit" class="btn btn-info">
                                 Buscar
                         </th>
