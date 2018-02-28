@@ -20,5 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/cadastrar', 'HomeController@store')->name('store');
 Route::delete('/deletar/{id}', 'HomeController@destroy')->name('home.destroy');
-Route::get('/taxas', 'HomeController@taxas')->name('taxas');
+Route::resource('/taxas', 'TaxasController');
 

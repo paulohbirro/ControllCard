@@ -19,6 +19,7 @@ class Payaments extends Migration
             $table->string('tipo');
             $table->double('valor', 8, 2);
             $table->integer('parcelas')->nullable();
+            $table->string('ref');
             $table->timestamps();
         });
     }

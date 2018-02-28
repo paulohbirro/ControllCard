@@ -57,11 +57,14 @@
                 <form role="form" method="post" action="/cadastrar">
                     {{ csrf_field() }}
 
+
+
+
                     <div class="form-group">
 
 
-                        <input  type="radio"  onclick="mostrar();"  checked {{old('tipo')==\App\Payaments::DEBITO?'checked':''}}  name="tipo" value="{{\App\Payaments::DEBITO}}"  /> Debito
-                        <input id="credito" onclick="mostrar();" type="radio"  {{old('tipo')==\App\Payaments::CREDITO?'checked':''}} name="tipo" value="{{\App\Payaments::CREDITO}}"  />Credito
+                        <input    onclick="mostrar();" type="radio" checked {{old('tipo')==$taxas[0]['debito']?'checked':''}}  name="tipo" value="{{$taxas[0]['debito']}}"  /> Debito
+                        <input id="credito" onclick="mostrar();" type="radio"  {{old('tipo')==$taxas[0]['credito']?'checked':''}} name="tipo" value="{{$taxas[0]['credito']}}"  />Credito
 
 
                     </div>
@@ -94,7 +97,7 @@
                         <label for="exampleInputPassword1">
                             Valor
                         </label>
-                        <input type="text" value="{{old('valor')}}" name="valor" class="form-control" id="exampleInputPassword1" />
+                        <input id="valor" type="text" value="{{old('valor')}}" name="valor" class="form-control"  />
                     </div>
 
                     <button type="submit" class="btn btn-success">
@@ -108,7 +111,7 @@
                 <div class="row">
                     <div class="col-md-12">
 
-                <table class="table table-info">
+                <table class="table table-info table-responsive">
 
                     <thead>
                     <form method="get" action="/home">
@@ -185,6 +188,9 @@
                         </td>
                         <td>
                            R$ {{ money_format('%n', $payament->valor ) }}
+
+                            <span  id="tooltipex"  title="" class="alert-success"> {{ $payament->parcelas>0? ' parcelado em: ' .$payament->parcelas. ' vezes':'' }}</span>
+
                         </td>
                         <td>
 

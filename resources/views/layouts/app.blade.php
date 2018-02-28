@@ -16,6 +16,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -25,7 +27,15 @@
         $(function () {
             $("#data1").mask("99/99/9999");
             $("#data2").mask("99/99/9999");
+
         });
+
+        $(function() {
+            $('#valor').maskMoney();
+        })
+
+
+
     </script>
 
 </head>
@@ -80,15 +90,11 @@
                                         </form>
 
                                     <li>
-                                        <a href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
-                                                     document.getElementById('taxas').submit();">
+                                        <a href="{{ route('taxas.index') }}">
                                             Configurar taxas
                                         </a>
 
-                                        <form id="taxas" action="{{ route('taxas') }}" method="GET" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
+
                                     </li>
                                     </li>
                                 </ul>

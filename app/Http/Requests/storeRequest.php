@@ -24,7 +24,7 @@ class storeRequest extends FormRequest
     public function rules()
     {
         return [
-            'tipo' => 'in:1.5,5.0',
+            'tipo' => 'required',
             'nome' => 'required',
             'valor' => 'required|numeric',
 //            'parcelas' => 'required_with:tipo:in:5.0',

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\indexRequest;
 use App\Http\Requests\storeRequest;
 use App\Payaments;
+use App\Taxas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -40,14 +42,15 @@ class HomeController extends Controller
 
         $total = $payaments->sum('valor');
 
-
-
-
+    if($request->has('data1') && $request->has('data2'))
         $payaments = $payaments->orderBy('created_at')->paginate();
+    else
+        $payaments = $payaments->where('created_at','<=',now())->orderBy('created_at')->paginate();
+
+        $taxas = Taxas::all();
 
 
-
-        return view('home')->with(compact('payaments','total'));
+        return view('home')->with(compact('payaments','total','taxas'));
     }
 
 
@@ -59,20 +62,23 @@ class HomeController extends Controller
        if($request->has('parcelas'))
        {
 
+          $request['ref'] = Hash::make(str_random(8));
+
+
+
            for($i=1;$i<$request->get('parcelas');$i++) {
+
                $pagamentos = Payaments::create($request->all());
-
                $dt = $pagamentos->created_at;
-
-
                $update= Payaments::find($pagamentos->id);
+
                $update->created_at = $dt->addMonth($i);
                $update->save();
-
-
            }
 
        }
+
+
 
 
            Payaments::create($request->all());
@@ -90,8 +96,5 @@ class HomeController extends Controller
         return redirect()->back()->with(['message' => 'Produto removido com sucesso!']);
     }
 
-    public function taxas(Request $request)
-    {
-        echo "taxas";
-    }
+
 }
