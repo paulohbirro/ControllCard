@@ -90,7 +90,7 @@
                         <label for="exampleInputEmail1">
                             Produto
                         </label>
-                        <input type="text" name="nome" value="{{old('nome')}}" class="form-control"  />
+                        <input type="text" id="nome" name="nome" value="{{old('nome')}}" class="form-control"  />
                     </div>
                     <div class="form-group">
 
@@ -237,3 +237,16 @@
 
 @endsection
 
+                            <script>
+                                //Javascript
+                                $(function()
+                                {
+                                    $( "#nome" ).autocomplete({
+                                        source: "search/autocomplete",
+                                        minLength: 3,
+                                        select: function(event, ui) {
+                                            $('#q').val(ui.item.value);
+                                        }
+                                    });
+                                });
+                            </script>

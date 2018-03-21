@@ -21,4 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/cadastrar', 'HomeController@store')->name('store');
 Route::delete('/deletar/{id}', 'HomeController@destroy')->name('home.destroy');
 Route::resource('/taxas', 'TaxasController');
+Route::get('search/autocomplete', 'SearchController@autocomplete');
 
