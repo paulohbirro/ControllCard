@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaxasUpdateRequest;
 use App\Taxas;
 use Illuminate\Http\Request;
 
@@ -69,7 +70,7 @@ class TaxasController extends Controller
      * @param  \App\Taxas  $taxas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(TaxasUpdateRequest $request,$id)
     {
 
         $t = Taxas::find($id);
