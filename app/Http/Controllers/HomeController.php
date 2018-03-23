@@ -58,23 +58,16 @@ class HomeController extends Controller
     {
 
 
+        $request['valor'] =$request->valor- ($request->valor/100*$request->tipo);
+
+
+
 
        if($request->has('parcelas'))
        {
 
           $request['ref'] = Hash::make(str_random(8));
 
-
-
-           for($i=1;$i<$request->get('parcelas');$i++) {
-
-               $pagamentos = Payaments::create($request->all());
-               $dt = $pagamentos->created_at;
-               $update= Payaments::find($pagamentos->id);
-
-               $update->created_at = $dt->addMonth($i);
-               $update->save();
-           }
 
        }
 

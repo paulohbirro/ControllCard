@@ -164,6 +164,9 @@
                             Data pagamento
                         </th>
                         <th>
+                            Tipo Pagamento
+                        </th>
+                        <th>
                             Valor
                         </th>
                         <th>
@@ -186,6 +189,10 @@
                         <td>
                             {{ date( 'd/m/Y H:i:' , strtotime($payament->created_at))}}
                         </td>
+
+                        <td>{{!is_null($payament->parcelas)?'Credito':'Debito'}}</td>
+
+
                         <td>
                            R$ {{ money_format('%n', $payament->valor ) }}
 
