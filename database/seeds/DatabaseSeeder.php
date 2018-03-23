@@ -1,6 +1,19 @@
 <?php
 
+use App\Taxas;
 use Illuminate\Database\Seeder;
+class TaxasTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        Taxas::create(['id'=>1,'credito'=>0,'debito'=>0]);
+    }
+}
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +24,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call('TaxasTableSeeder');
     }
 }
