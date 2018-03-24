@@ -28,12 +28,25 @@
             $("#data1").mask("99/99/9999");
             $("#data2").mask("99/99/9999");
 
+
         });
 
         $(function() {
             $('#valor').maskMoney();
         })
+        $(function () {
+            $("#formdata").submit(function () {
 
+
+               if($('#data1').val()=="" || $('#data2').val()==""){
+
+                   alert('Favor preencher campo de datas');
+                   return false
+               }
+
+
+            });
+        });
 
 
     </script>

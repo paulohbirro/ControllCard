@@ -30,10 +30,6 @@ class HomeController extends Controller
     public function index(Request $request, Payaments $payaments)
     {
 
-        if($request->get('data1')=="" or $request->get('data1')=="") {
-                echo "ad";
-        }
-
 
         if($request->has('data1') && $request->has('data2'))
         {
