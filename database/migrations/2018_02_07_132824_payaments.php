@@ -15,9 +15,10 @@ class Payaments extends Migration
     {
         Schema::create('payaments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome');
+            $table->string('nome')->nullable();
             $table->string('tipo');
-            $table->double('valor', 8, 2);
+            $table->float('valor', 11, 2);
+            $table->float('valorvenda', 11, 2);
             $table->integer('parcelas')->nullable();
             $table->string('ref');
             $table->timestamps();

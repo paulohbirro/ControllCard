@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Taxas extends Model
 {
     protected $fillable = [
-        'id', 'credito', 'debito'
+        'id', 'credito','creditoavista', 'debito'
     ];
 }

@@ -12,6 +12,6 @@ class TaxasTableSeeder extends Seeder
      */
     public function run()
     {
-        Taxas::create(['id'=>1,'credito'=>0,'debito'=>0]);
+        Taxas::create(['id'=>1,'credito'=>0,'creditoavista'=>1,'debito'=>0]);
     }
 }

@@ -64,7 +64,7 @@
 
 
                         <input    onclick="mostrar();" type="radio" checked {{old('tipo')==$taxas[0]['debito']?'checked':''}}  name="tipo" value="{{$taxas[0]['debito']}}"  /> Debito
-                        <input id="credito" onclick="mostrar();" type="radio"  {{old('tipo')==$taxas[0]['credito']?'checked':''}} name="tipo" value="{{$taxas[0]['credito']}}"  />Credito
+                        <input id="credito" onclick="mostrar();" type="radio"  {{old('tipo')==$taxas[0]['credito']?'checked':''}} name="tipo" value="{{$taxas[0]['credito']}}"  /> Credito
 
 
                     </div>
@@ -87,10 +87,10 @@
 
                     <div class="form-group">
 
-                        <label for="exampleInputEmail1">
-                            Produto
-                        </label>
-                        <input type="text" id="nome" name="nome" value="{{old('nome')}}" class="form-control"  />
+                        {{--<label for="exampleInputEmail1">--}}
+                            {{--Produto--}}
+                        {{--</label>--}}
+                        {{--<input type="text" id="nome" name="nome" value="{{old('nome')}}" class="form-control"  />--}}
                     </div>
                     <div class="form-group">
 
@@ -117,7 +117,7 @@
                     <form method="get" action="/home">
 
                     <tr>
-                        <th width="180">
+                        <th width="18px">
                             Pesquisar por data:
                         </th>
                         <th>
@@ -126,7 +126,7 @@
                         </th>
 
 
-                        <th width="45%">
+                        <th width="40%">
 
                             <button style="margin-left: 30px;" type="submit" class="btn btn-info">
                                 Buscar
@@ -157,9 +157,9 @@
                         <th>
                             #
                         </th>
-                        <th>
-                            Produto
-                        </th>
+                        {{--<th>--}}
+                            {{--Produto--}}
+                        {{--</th>--}}
                         <th>
                             Data pagamento
                         </th>
@@ -167,10 +167,13 @@
                             Tipo Pagamento
                         </th>
                         <th>
-                            Valor
+                            Valor de venda
                         </th>
                         <th>
-                            Gerencdata2iar
+                            Valor com taxa
+                        </th>
+                        <th>
+                            Ação
                         </th>
                     </tr>
 
@@ -183,18 +186,35 @@
                         <td>
                             {{$payament->id}}
                         </td>
-                        <td>
-                            {{$payament->nome}}
-                        </td>
+                        {{--<td>--}}
+                            {{--{{$payament->nome}}--}}
+                        {{--</td>--}}
                         <td>
                             {{ date( 'd/m/Y H:i:' , strtotime($payament->created_at))}}
                         </td>
 
-                        <td>{{!is_null($payament->parcelas)?'Credito':'Debito'}}</td>
+                        <td>
+
+                            @if($payament->parcelas==1)
+                                Credito-Avista
+
+                             @elseif($payament->parcelas>1)
+                                Credito
+                             @else
+                                Debito
+                             @endif
+
+                        </td>
 
 
                         <td>
-                           R$ {{ money_format('%n', $payament->valor ) }}
+                           R$ {{ money_format('%n', $payament->valorvenda) }}
+
+
+                        </td>
+
+                        <td>
+                            R$ {{ money_format('%n', $payament->valor ) }}
 
                             <span  id="tooltipex"  title="" class="alert-success"> {{ $payament->parcelas>0? ' parcelado em: ' .$payament->parcelas. ' vezes':'' }}</span>
 
@@ -244,16 +264,16 @@
 
 @endsection
 
-                            <script>
-                                //Javascript
-                                $(function()
-                                {
-                                    $( "#nome" ).autocomplete({
-                                        source: "search/autocomplete",
-                                        minLength: 3,
-                                        select: function(event, ui) {
-                                            $('#q').val(ui.item.value);
-                                        }
-                                    });
-                                });
-                            </script>
+<script>
+    //Javascript
+    $(function()
+    {
+        $( "#nome" ).autocomplete({
+            source: "search/autocomplete",
+            minLength: 3,
+            select: function(event, ui) {
+                $('#q').val(ui.item.value);
+            }
+        });
+    });
+</script>

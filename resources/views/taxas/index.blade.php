@@ -30,6 +30,14 @@
             </label>
             <input type="text" name="credito" value="{{old('credito',$taxas[0]['credito'])}}" class="form-control"  />
         </div>
+    <div class="form-group">
+
+        <label for="exampleInputEmail1">
+            Credito Avista
+        </label>
+        <input type="text" name="creditoavista" value="{{old('creditoavista',$taxas[0]['creditoavista'])}}" class="form-control"  />
+    </div>
+
         <div class="form-group">
 
             <label for="exampleInputPassword1">

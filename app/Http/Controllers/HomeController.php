@@ -29,6 +29,12 @@ class HomeController extends Controller
      */
     public function index(Request $request, Payaments $payaments)
     {
+
+        if($request->get('data1')=="" or $request->get('data1')=="") {
+                echo "ad";
+        }
+
+
         if($request->has('data1') && $request->has('data2'))
         {
             $data1 = Carbon::createFromFormat('d/m/Y',$request->get('data1'));
@@ -54,14 +60,20 @@ class HomeController extends Controller
     }
 
 
-    public function store(storeRequest $request)
+    public function store(storeRequest $request, Taxas $taxas)
     {
 
+      $valor =  str_replace(',','',$request->valor);
+      $valorvenda =  str_replace(',','',$request->valor);
 
-        $request['valor'] =$request->valor- ($request->valor/100*$request->tipo);
+      $request['valorvenda'] = $valorvenda;
 
+      $res =  $taxas->where('creditoavista','>=',0)->first();
 
-
+        if($request->parcelas>1)
+            $request['valor'] =$valor-($valor/100*$request->tipo);
+        else
+            $request['valor'] =$valor- ($valor/100*$res->creditoavista);
 
        if($request->has('parcelas'))
        {
@@ -70,8 +82,6 @@ class HomeController extends Controller
 
 
        }
-
-
 
 
            Payaments::create($request->all());

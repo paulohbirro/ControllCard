@@ -16,6 +16,7 @@ class CreateTaxasTable extends Migration
         Schema::create('taxas', function (Blueprint $table) {
             $table->increments('id');
             $table->double('credito');
+            $table->double('creditoavista');
             $table->double('debito');
             $table->timestamps();
         });
