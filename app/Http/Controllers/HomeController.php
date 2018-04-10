@@ -52,12 +52,17 @@ class HomeController extends Controller
         $taxas = Taxas::all();
 
 
+
+
         return view('home')->with(compact('payaments','total','taxas'));
     }
 
 
     public function store(storeRequest $request, Taxas $taxas)
     {
+
+
+
 
       $valor =  str_replace(',','',$request->valor);
       $valorvenda =  str_replace(',','',$request->valor);
@@ -66,19 +71,41 @@ class HomeController extends Controller
 
       $res =  $taxas->where('creditoavista','>=',0)->first();
 
-        if($request->parcelas>1)
-            $request['valor'] =$valor-($valor/100*$request->tipo);
-        else
-            $request['valor'] =$valor- ($valor/100*$res->creditoavista);
+        if($request->parcelas>1) {
 
-       if($request->has('parcelas'))
-       {
+            $id = Hash::make(str_random(4));
 
-          $request['ref'] = Hash::make(str_random(8));
+            for($i=1;$i<$request->get('parcelas');$i++) {
+                $valores = $valor - ($valor / 100 * $res->credito);
+                $request['valor'] = $valores/$request->get('parcelas');
+                $request['ref'] = $id;
+                $pagamentos = Payaments::create($request->all());
 
 
+                $dt = $pagamentos->created_at;
+                $update= Payaments::find($pagamentos->id);
+                $update->ref =$id;
+                $update->created_at = $dt->addMonth($i);
+                $update->save();
+            }
+
+        }
+        else {
+
+            $request['valor'] = $valor - ($valor / 100 * $res->creditoavista);
+        }
+//       if($request->has('parcelas'))
+//       {
+//          $request['ref'] = Hash::make(str_random(8));
+//
+//       }
+       if($request->get('tipo')===2){
+           $request['valor'] = $valor - ($valor / 100 * $res->debito);
        }
 
+
+       if($request->parcelas<=1 && $request->tipo==5)
+               $request['tipo']=$res->creditoavista;
 
            Payaments::create($request->all());
 
@@ -93,6 +120,18 @@ class HomeController extends Controller
         $payaments_del  = Payaments::find($id);
         $payaments_del->delete();
         return redirect()->back()->with(['message' => 'Produto removido com sucesso!']);
+    }
+
+
+    public  function history(Request $request, $id, Payaments $payaments){
+
+        $pagamentos = Payaments::find($id);
+
+        $history = $payaments->where('ref',$pagamentos->ref)->get();
+
+        return view('history')->with(compact('history'));
+
+
     }
 
 

@@ -20,7 +20,7 @@ class Payaments extends Migration
             $table->float('valor', 11, 2);
             $table->float('valorvenda', 11, 2);
             $table->integer('parcelas')->nullable();
-            $table->string('ref');
+            $table->string('ref')->nullable();
             $table->timestamps();
         });
     }

@@ -33,7 +33,7 @@
 
         $(function() {
             $('#valor').maskMoney();
-        })
+        });
         $(function () {
             $("#formdata").submit(function () {
 
