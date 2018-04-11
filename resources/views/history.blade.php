@@ -31,11 +31,11 @@
 
                     @if($historys->created_at>=\Illuminate\Support\Carbon::now())
 
-                        <span style="color:red"> {{ date( 'd/m/Y ' , strtotime($historys->created_at))}} </span>
+                        <span style="color:blue"> {{ date( 'd/m/Y ' , strtotime($historys->created_at))}} </span>
 
                     @else
 
-                        <span style="color:blue">  {{ date( 'd/m/Y ' , strtotime($historys->created_at))}} </span>
+                        <span style="color:red">  {{ date( 'd/m/Y ' , strtotime($historys->created_at))}} </span>
 
                     @endif
 
@@ -54,6 +54,10 @@
             <td colspan="11">Nenhuma parcela</td>
         </tr>
     @endforelse
+
+    <tr>
+        <td colspan="11"><button onclick=" window.history.back();" class="btn btn-default"> Voltar</button></td>
+    </tr>
 
             </tbody>
         </table>

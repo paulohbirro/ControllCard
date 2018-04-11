@@ -45,14 +45,15 @@ class HomeController extends Controller
         $total = $payaments->sum('valor');
 
     if($request->has('data1') && $request->has('data2'))
-        $payaments = $payaments->orderBy('created_at')->paginate();
+        $payaments = $payaments->orderBy('created_at')
+                               ->where('tipo','<>','0')
+                               ->paginate();
     else
-        $payaments = $payaments->where('created_at','<=',now())->orderBy('created_at')->paginate();
+        $payaments = $payaments->where('created_at','<=',now())
+                                ->where('tipo','<>','0')
+                                ->orderBy('created_at')->paginate();
 
         $taxas = Taxas::all();
-
-
-
 
         return view('home')->with(compact('payaments','total','taxas'));
     }
@@ -61,9 +62,6 @@ class HomeController extends Controller
     public function store(storeRequest $request, Taxas $taxas)
     {
 
-
-
-
       $valor =  str_replace(',','',$request->valor);
       $valorvenda =  str_replace(',','',$request->valor);
 
@@ -71,10 +69,15 @@ class HomeController extends Controller
 
       $res =  $taxas->where('creditoavista','>=',0)->first();
 
+      //caso credito mais de uma parcela
         if($request->parcelas>1) {
 
             $id = Hash::make(str_random(4));
 
+            //pega data do form
+            if(!is_null($request->get('datav1'))) {
+                $data1 = Carbon::createFromFormat('d/m/Y', $request->get('datav1'));
+            }
             for($i=1;$i<$request->get('parcelas');$i++) {
                 $valores = $valor - ($valor / 100 * $res->credito);
                 $request['valor'] = $valores/$request->get('parcelas');
@@ -82,16 +85,17 @@ class HomeController extends Controller
                 $pagamentos = Payaments::create($request->all());
 
 
-                $dt = $pagamentos->created_at;
+                $dt = !is_null($request->get('datav1'))?$data1:$pagamentos->created_at;
                 $update= Payaments::find($pagamentos->id);
-                $update->ref =$id;
+                $update->ref = $id;
+                $update->tipo = 0;
                 $update->created_at = $dt->addMonth($i);
                 $update->save();
             }
 
         }
         else {
-
+            //credito uma parcela = credito avista
             $request['valor'] = $valor - ($valor / 100 * $res->creditoavista);
         }
 //       if($request->has('parcelas'))
@@ -99,6 +103,7 @@ class HomeController extends Controller
 //          $request['ref'] = Hash::make(str_random(8));
 //
 //       }
+        // debito
        if($request->get('tipo')===2){
            $request['valor'] = $valor - ($valor / 100 * $res->debito);
        }
@@ -107,9 +112,18 @@ class HomeController extends Controller
        if($request->parcelas<=1 && $request->tipo==5)
                $request['tipo']=$res->creditoavista;
 
-           Payaments::create($request->all());
 
 
+        $pagamentos = Payaments::create($request->all());
+
+
+      if(!is_null($request->get('datav1'))) {
+          //pegar data
+          $data1 = Carbon::createFromFormat('d/m/Y', $request->get('datav1'));
+          $update = Payaments::find($pagamentos->id);
+          $update->created_at = $data1;
+          $update->save();
+      }
 
 
         return redirect()->back()->with(['message' => 'Cadastrado com sucesso!']);
@@ -117,8 +131,18 @@ class HomeController extends Controller
 
     public function destroy($id)
     {
-        $payaments_del  = Payaments::find($id);
-        $payaments_del->delete();
+        $payaments  = Payaments::find($id);
+
+        $payaments_del = Payaments::where('ref',$payaments->ref)->get() ;
+
+        foreach ($payaments_del as $paydel){
+
+            $paydel->delete();
+
+        }
+
+
+
         return redirect()->back()->with(['message' => 'Produto removido com sucesso!']);
     }
 

@@ -39,18 +39,6 @@
     </div>
 
 
-
-    <div  class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabels" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            </div>
-        </div>
-    </div>
-
-
-
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -78,7 +66,7 @@
                         <input    onclick="mostrar();" type="radio" checked {{old('tipo')==$taxas[0]['debito']?'checked':''}}  name="tipo" value="{{$taxas[0]['debito']}}"  /> Debito
                         <input id="credito" onclick="mostrar();" type="radio"  {{old('tipo')==$taxas[0]['credito']?'checked':''}} name="tipo" value="{{$taxas[0]['credito']}}"  /> Credito
 
-                        <input type="text" value=" {{request()->get('datav1')}}" class="data1" id="data1" name="datav1">
+                        <input type="text" value=" {{request()->get('datav1')}}" class="data1" id="datav1" name="datav1">
 
                     </div>
 
@@ -135,7 +123,7 @@
                         </th>
                         <th>
 
-                            <input type="text" value=" {{request()->get('data1')}}" class="data1" id="data1" name="data1"> até <input type="text" value="{{request()->get('data1')}}" id="data2" name="data2">
+                            <input type="text" value="{{request()->get('data1')}}" class="data1" id="data1" name="data1"> até <input type="text" value="{{request()->get('data1')}}" id="data2" name="data2">
                         </th>
 
 
@@ -232,9 +220,10 @@
                         <td>
                             <span  id="tooltipex"  title="" class="alert-success"> {{ $payament->parcelas>0? ' parcelado em: ' .$payament->parcelas. ' x':'' }}</span>    R$ {{ money_format('%n', $payament->valor ) }}
 
+                            @if($payament->parcelas>0)
+                                <a  class="btn" href="{{route('home.history',$payament->id)}}" data-target="#detail">Visualizar</a>
 
-                            <a data-toggle="modal" class="btn" href="{{route('home.history',$payament->id)}}" data-target="#detail">Visualizar</a>
-
+                            @endif
                             {{--<a href="{{route('home.history',$payament->id)}}">Visualizar</a>--}}
 
 
