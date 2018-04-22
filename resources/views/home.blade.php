@@ -14,7 +14,7 @@
                 document.getElementById("parcelas").style.display = "block";
             }
             else{
-                document.getElementById("parcelas").style.display = "none";
+                document.getElementById("parcelas").style.display = "block";
             }
 
         }
@@ -63,8 +63,8 @@
                     <div class="form-group">
 
 
-                        <input    onclick="mostrar();" type="radio" checked {{old('tipo')==$taxas[0]['debito']?'checked':''}}  name="tipo" value="{{$taxas[0]['debito']}}"  /> Debito
-                        <input id="credito" onclick="mostrar();" type="radio"  {{old('tipo')==$taxas[0]['credito']?'checked':''}} name="tipo" value="{{$taxas[0]['credito']}}"  /> Credito
+                        <input    onclick="mostrar();" type="radio" checked {{old('tipo')==$taxas[0]['debito']?'checked':''}}  name="tipo" value="2"  /> Debito
+                        <input id="credito" onclick="mostrar();" type="radio"  {{old('tipo')==$taxas[0]['credito']?'checked':''}} name="tipo" value="5"  /> Credito
 
                         <input type="text" value=" {{request()->get('datav1')}}" class="data1" id="datav1" name="datav1">
 
@@ -134,7 +134,8 @@
                         </th>
 
                         <th>
-                          <h1>  <span class="label label-primary">R$ {{ money_format('%n', $total ) }}</span></h1>
+
+                          <h1>  <span class="label label-primary">{{  'R$ '.number_format($total, 2, ',', '.') }}</span></h1>
 
 
 
@@ -212,15 +213,17 @@
 
 
                         <td>
-                           R$ {{ money_format('%n', $payament->valorvenda) }}
+
+                            {{  'R$ '.number_format($payament->valorvenda, 2, ',', '.') }}
 
 
                         </td>
 
                         <td>
-                            <span  id="tooltipex"  title="" class="alert-success"> {{ $payament->parcelas>0? ' parcelado em: ' .$payament->parcelas. ' x':'' }}</span>    R$ {{ money_format('%n', $payament->valor ) }}
 
-                            @if($payament->parcelas>0)
+                            <span  id="tooltipex"  title="" class="alert-success"> {{ $payament->parcelas>0? ' parcelado em: ' .$payament->parcelas. ' x':'' }}</span>    {{  'R$ '.number_format($payament->valor, 2, ',', '.') }}
+
+                            @if($payament->parcelas>1)
                                 <a  class="btn" href="{{route('home.history',$payament->id)}}" data-target="#detail">Visualizar</a>
 
                             @endif
@@ -231,18 +234,9 @@
                         <td>
 
 
-                            <button class="btn btn-danger" data-href="/delete.php?id=54" data-toggle="modal" data-target="#confirm-delete">
-                               Excluir
-                            </button>
+                      <a href="{{route('home.destroy',$payament->id)}}">Excluir</a>
 
-                            <form id="delete-form" method="post" action="{{route('home.destroy',[$payament->id])}}"
-                             style="display: none" >
 
-                                <input type="hidden" name="_method" value="delete">
-
-                                {{csrf_field()}}
-
-                            </form>
 
 
 

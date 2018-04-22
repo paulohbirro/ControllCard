@@ -41,7 +41,7 @@
 
                 </td>
                 <td>
-                    R$ {{ money_format('%n', $historys->valor) }}
+                    {{  'R$ '.number_format($historys->valor, 2, ',', '.') }}
                 </td>
 
             </tr>

@@ -25,8 +25,10 @@ class storeRequest extends FormRequest
     {
         return [
             'tipo' => 'required',
+            'datav1' => 'required',
            // 'nome' => 'required',
             'valor' => "required",
+            'parcelas' => 'required_if:tipo,5',
 
 //            'parcelas' => 'required_with:tipo:in:5.0',
         ];

@@ -13,28 +13,54 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+       <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <script>
 
-    <script type="text/javascript">
-        $(function () {
-            $("#data1").mask("99/99/9999");
-            $("#data2").mask("99/99/9999");
-            $("#datav1").mask("99/99/9999");
-
-
+        jQuery(function($){
+            $.datepicker.regional['pt-BR'] = {
+                closeText: 'Fechar',
+                prevText: '&#x3c;Anterior',
+                nextText: 'Pr&oacute;ximo&#x3e;',
+                currentText: 'Hoje',
+                monthNames: ['Janeiro','Fevereiro','Mar&ccedil;o','Abril','Maio','Junho',
+                    'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun',
+                    'Jul','Ago','Set','Out','Nov','Dez'],
+                dayNames: ['Domingo','Segunda-feira','Ter&ccedil;a-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sabado'],
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'],
+                dayNamesMin: ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'],
+                weekHeader: 'Sm',
+                dateFormat: 'dd/mm/yy',
+                firstDay: 0,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ''};
+            $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
         });
 
-        $(function() {
-            $('#valor').maskMoney();
-        });
+
+        $( function() {
+            $( "#datav1" ).datepicker( );
+        } );
+
+        $( function() {
+            $( "#data1" ).datepicker( );
+        } );
+
+        $( function() {
+            $( "#data2" ).datepicker( );
+        } );
+
+
         $(function () {
             $("#formdata").submit(function () {
 
@@ -124,8 +150,14 @@
         @yield('content')
     </div>
 
+    <script type="text/javascript">
+        $(function(){
+            $("#valor").maskMoney();
+        })
+    </script>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
 
 
 </body>
