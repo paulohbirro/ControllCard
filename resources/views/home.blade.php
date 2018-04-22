@@ -14,7 +14,7 @@
                 document.getElementById("parcelas").style.display = "block";
             }
             else{
-                document.getElementById("parcelas").style.display = "block";
+                document.getElementById("parcelas").style.display = "none";
             }
 
         }
